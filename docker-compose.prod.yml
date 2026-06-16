@@ -27,6 +27,7 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://stiucastii.owh.md}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.stiucastii.owh.md}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     ports:
       - "3010:3000"
