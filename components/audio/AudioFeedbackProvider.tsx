@@ -68,7 +68,7 @@ export function AudioFeedbackProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const unlockAudio = () => {
-      unlockedRef.current = true;
+      warmAudio();
       if (isIntroPath(pathname)) {
         playIntro();
       }
@@ -227,6 +227,36 @@ export function AudioFeedbackProvider({ children }: { children: ReactNode }) {
     });
   }
 
+  function warmAudio() {
+    if (unlockedRef.current) return;
+
+    unlockedRef.current = true;
+
+    Object.entries(soundMap).forEach(([cue, src]) => {
+      if (!src) return;
+
+      const audio = getAudio(cue as AudioCue, src);
+      const previousMuted = audio.muted;
+      const previousVolume = audio.volume;
+
+      audio.muted = true;
+      audio.volume = 0;
+
+      void audio
+        .play()
+        .then(() => {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.muted = previousMuted;
+          audio.volume = previousVolume;
+        })
+        .catch(() => {
+          audio.muted = previousMuted;
+          audio.volume = previousVolume;
+        });
+    });
+  }
+
   function clearIntroFade() {
     if (introFadeRef.current === null) return;
 
@@ -285,6 +315,7 @@ export function AudioFeedbackProvider({ children }: { children: ReactNode }) {
   }
 
   function setAudioMuted(nextMuted: boolean) {
+    warmAudio();
     mutedRef.current = nextMuted;
     setMuted(nextMuted);
     window.localStorage.setItem("stiucastii-audio-muted", String(nextMuted));
