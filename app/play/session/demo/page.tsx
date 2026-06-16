@@ -2,6 +2,8 @@ import { PlayableGame } from "@/components/game/PlayableGame";
 import { GameShell } from "@/components/layout/GameShell";
 import { findPlayerByNickname } from "@/lib/players";
 
+export const dynamic = "force-dynamic";
+
 type DemoGamePageProps = {
   searchParams: Promise<{ player?: string }>;
 };

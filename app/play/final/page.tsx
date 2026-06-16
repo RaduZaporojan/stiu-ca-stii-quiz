@@ -5,6 +5,8 @@ import { TimerCapsule } from "@/components/game/TimerCapsule";
 import { GameShell } from "@/components/layout/GameShell";
 import { answers } from "@/lib/demo-data";
 
+export const dynamic = "force-dynamic";
+
 export default function FinalRoundPage() {
   return (
     <GameShell>

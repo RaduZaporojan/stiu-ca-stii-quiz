@@ -3,6 +3,8 @@ import { PlayerStatus } from "@/components/game/PlayerStatus";
 import { GameShell } from "@/components/layout/GameShell";
 import { AppButton } from "@/components/layout/AppButton";
 
+export const dynamic = "force-dynamic";
+
 export default function ResultPage() {
   return (
     <GameShell>

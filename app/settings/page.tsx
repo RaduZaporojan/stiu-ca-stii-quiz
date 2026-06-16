@@ -3,6 +3,8 @@ import { AudioSettingsPanel } from "@/components/audio/AudioSettingsPanel";
 import { AppButton } from "@/components/layout/AppButton";
 import { GameShell } from "@/components/layout/GameShell";
 
+export const dynamic = "force-dynamic";
+
 const settingsCards = [
   {
     title: "Complexitatea întrebărilor",
