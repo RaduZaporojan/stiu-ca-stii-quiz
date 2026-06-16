@@ -6,6 +6,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Știu că Știi",
   description: "Joc web quiz Știu că Știi",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
