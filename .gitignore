@@ -48,3 +48,8 @@ __MACOSX/
 .cache/
 tmp/
 temp/
+
+# Local handoff files with real secrets
+*.local.md
+*secrets*.md
+*SECRETS*.md
