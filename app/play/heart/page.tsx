@@ -30,7 +30,7 @@ export default async function HeartPage({ searchParams }: HeartPageProps) {
               {error}
             </p>
           ) : null}
-          <div className="mt-8 flex w-full max-w-[760px] items-center justify-center gap-0 sm:mt-12 sm:gap-4 lg:mt-10 lg:gap-8 xl:gap-10">
+          <div className="mt-8 flex w-full max-w-[760px] items-center justify-center gap-8 sm:mt-12 sm:gap-8 lg:mt-10 lg:gap-8 xl:gap-10">
             <form action={chooseHeart}>
               <input name="nickname" type="hidden" value={nickname} />
               <input name="heartColor" type="hidden" value="orange" />

@@ -657,9 +657,9 @@ input {
 .heart-picker-heart {
   display: block;
   position: relative;
-  width: clamp(104px, 31vw, 170px);
-  height: clamp(104px, 31vw, 170px);
-  margin: 28px 30px 16px;
+  width: clamp(96px, 24vw, 170px);
+  height: clamp(96px, 24vw, 170px);
+  margin: 26px 16px 16px;
   transform: rotate(-45deg);
   transform-origin: center;
 }
@@ -1201,7 +1201,9 @@ input {
 
 @media (max-width: 420px) {
   .heart-picker-heart {
-    margin-inline: 22px;
+    width: clamp(88px, 23vw, 98px);
+    height: clamp(88px, 23vw, 98px);
+    margin: 22px 8px 14px;
   }
 }
 
