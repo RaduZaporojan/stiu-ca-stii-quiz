@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type PopUpSequenceId = "ioana-app1" | "ioana-app2" | "ioana-app4";
 
@@ -116,16 +116,6 @@ export function CorrectAnswerPopUp({
         width: size,
       }}
     >
-      <div className="correct-popup-instant" />
-      {Array.from({ length: 7 }, (_, index) => (
-        <span
-          className="correct-popup-ray"
-          key={`${id}-ray-${index}`}
-          style={{
-            "--ray-index": index,
-          } as CSSProperties}
-        />
-      ))}
       <div className="pointer-events-none absolute inset-0 z-0">
         {particles.map((particle, index) => (
           <motion.span
