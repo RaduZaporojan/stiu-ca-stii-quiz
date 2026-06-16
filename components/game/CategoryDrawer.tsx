@@ -10,16 +10,16 @@ type CategoryDrawerProps = {
 function DrawerContent({ name }: { name: string }) {
   return (
     <>
-      <span className="mb-2 block text-[18px] font-bold uppercase leading-tight text-[#00518f] sm:text-[20px]">
+      <span className="mb-1 block text-[16px] font-bold uppercase leading-tight text-[#00518f] sm:mb-2 sm:text-[20px]">
         {name}
       </span>
       <span
         className={cn(
-          "game-gradient flex h-[54px] w-full items-center justify-center rounded-[16px] shadow-game transition sm:h-[57px]",
+          "game-gradient flex h-[44px] w-full items-center justify-center rounded-[14px] shadow-game transition sm:h-[57px] sm:rounded-[16px]",
           "group-hover:-translate-y-1 group-hover:shadow-soft",
         )}
       >
-        <span className="h-[10px] w-[104px] rounded-full bg-white" />
+        <span className="h-[8px] w-[104px] rounded-full bg-white sm:h-[10px]" />
       </span>
     </>
   );
