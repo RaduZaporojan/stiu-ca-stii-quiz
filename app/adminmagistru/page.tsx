@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
 import { isAdminMagistruUnlocked, unlockAdminMagistru } from "./actions";
 
+export const dynamic = "force-dynamic";
+
 type AdminMagistruPageProps = {
   searchParams?: Promise<{
     category?: string;

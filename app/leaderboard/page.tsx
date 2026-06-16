@@ -3,6 +3,8 @@ import { AppButton } from "@/components/layout/AppButton";
 import { Footer } from "@/components/layout/Footer";
 import { getLeaderboard } from "@/lib/leaderboard";
 
+export const dynamic = "force-dynamic";
+
 export default async function LeaderboardPage() {
   const leaderboard = await getLeaderboard(10);
   const entries = leaderboard.map((entry) => ({
