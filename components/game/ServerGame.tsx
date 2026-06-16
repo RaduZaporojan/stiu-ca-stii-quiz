@@ -545,7 +545,7 @@ export function ServerGame({
 
   if (phase === "choosing_category") {
     return withTransition(
-      <div className="flex flex-1 flex-col items-center justify-center text-center lg:pb-20">
+      <div className="flex flex-1 flex-col items-center justify-start pt-4 text-center sm:justify-center sm:pt-0 lg:pb-20">
         <p className="text-[14px] font-extrabold uppercase text-stiucastiiOrange sm:text-[18px]">
           Runda {round} din 3
         </p>
@@ -557,7 +557,7 @@ export function ServerGame({
           <br />
           Pentru fiecare răspuns corect primești o inimă.
         </p>
-        <div className="mt-5 sm:mt-6">
+        <div className="mt-4 sm:mt-6">
           <PlayerStatus
             color={playerHeartColor}
             hearts={temporaryHearts}
@@ -568,7 +568,7 @@ export function ServerGame({
         </div>
 
         {categoryOptions.length > 0 ? (
-          <div className="mt-5 grid w-full max-w-[688px] grid-cols-1 gap-x-[18px] gap-y-[14px] sm:mt-9 sm:grid-cols-2 sm:gap-y-[26px] lg:grid-cols-3">
+          <div className="mt-4 grid w-full max-w-[688px] grid-cols-1 gap-x-[18px] gap-y-[14px] sm:mt-9 sm:grid-cols-2 sm:gap-y-[26px] lg:grid-cols-3">
             {categoryOptions.map((category) => (
               <button
                 className="block w-full border-0 bg-transparent p-0"
