@@ -1,57 +1,69 @@
-# Știu că Știi Quiz
+# Stiu ca Stii Quiz
 
-MVP UI pentru jocul web „Știu că Știi”, construit după mockup-urile existente din `design/Stiu ca Stii game`.
+Joc web quiz pentru proiectul "Stiu ca Stii", construit ca MVP single-player cu runde normale, runda finala, inimi temporare, leaderboard persistent si panou admin.
 
-## Stack pregătit
+## Stack
 
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
-- Framer Motion pregătit pentru tranziții
-- Prisma/PostgreSQL pregătite ca dependencies pentru pasul backend
+- Framer Motion
+- Prisma ORM
+- PostgreSQL
+- Docker / Docker Compose
 
-## Rulare locală
+## Rulare locala
 
 ```bash
 npm install
+docker compose up -d
 npx prisma migrate dev
 npx prisma db seed
 npm run dev
 ```
 
-Aplicația pornește la:
+Aplicatia porneste la:
 
 ```bash
 http://localhost:3000
 ```
 
-## Bază de date locală
+## Env local
 
-Pentru development local, aplicația folosește PostgreSQL:
-
-```env
-DATABASE_URL="postgresql://stiucastii_user:stiucastii_password@localhost:5432/stiucastii?schema=public"
-```
-
-Pe Windows, dacă Docker Desktop nu poate porni până la activarea WSL2, se poate folosi PostgreSQL instalat nativ. După ce WSL2/Docker sunt active, baza poate fi pornită și cu:
+Copiaza `.env.example` in `.env` si completeaza valorile:
 
 ```bash
-docker compose up -d
+cp .env.example .env
 ```
 
-## Ecrane UI incluse
+## Rute principale
 
-- `/` welcome
+- `/`
 - `/play/nickname`
 - `/play/heart`
-- `/play/categories`
-- `/play/session/demo`
-- `/play/final`
-- `/result/demo`
-- `/result/lost`
+- `/play/session/[sessionId]`
 - `/leaderboard`
-- `/admin`
+- `/settings`
+- `/adminmagistru`
 
-## Asset-uri
+## Admin
 
-Asset-urile folosite de UI sunt copiate în `public/assets`, inclusiv logo, inimi, timer, moving balls și fontul Barlow.
+Adminul foloseste parola din `ADMIN_PASSWORD`.
+
+## Deploy VPS
+
+Instructiunile complete sunt in [DEPLOY.md](DEPLOY.md).
+
+Productia foloseste:
+
+- `docker-compose.prod.yml`
+- `.env.production.example`, copiat ca `.env` pe server
+- Nginx reverse proxy separat pentru `stiucastii.owh.md`
+- port intern `3010`
+
+Aplicatia trebuie tinuta separata de Cinemateca:
+
+```bash
+/var/www/cinemateca
+/var/www/stiucastii
+```

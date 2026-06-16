@@ -1,7 +1,8 @@
 services:
   stiucastii-db:
     image: postgres:16
-    restart: always
+    container_name: stiucastii-db
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-stiucastii}
       POSTGRES_USER: ${POSTGRES_USER:-stiucastii_user}
@@ -15,10 +16,11 @@ services:
       retries: 5
 
   stiucastii-web:
+    container_name: stiucastii-web
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     depends_on:
       stiucastii-db:
         condition: service_healthy
