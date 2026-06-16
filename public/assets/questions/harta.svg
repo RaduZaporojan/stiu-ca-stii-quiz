@@ -1,0 +1,21 @@
+<svg width="800" height="420" viewBox="0 0 800 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="420" rx="28" fill="url(#bg)"/>
+  <path d="M86 86C171 52 245 58 326 93C390 120 462 119 535 87C615 52 684 62 731 96V330C670 292 599 287 523 322C449 356 381 352 314 321C232 283 157 281 86 321V86Z" fill="#F7FBFF" stroke="white" stroke-width="12"/>
+  <path d="M213 72V303M369 106V339M548 78V319" stroke="#DDE8F2" stroke-width="5"/>
+  <path d="M90 166C155 132 222 128 286 154C348 180 415 182 478 155C556 122 640 126 729 172" stroke="#DDE8F2" stroke-width="5"/>
+  <path d="M90 250C166 213 238 217 308 247C380 278 444 275 510 246C585 213 654 218 729 257" stroke="#DDE8F2" stroke-width="5"/>
+  <path d="M344 126C365 113 389 115 406 132C426 151 452 148 468 130C488 108 521 119 526 149C531 182 496 195 484 221C471 248 489 278 458 294C429 310 405 282 378 285C349 288 324 312 301 287C278 262 305 236 298 207C291 179 313 145 344 126Z" fill="#0A87DD" opacity=".9"/>
+  <path d="M383 146C395 139 410 140 420 151C432 164 448 163 459 151" stroke="white" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+  <path d="M460 208C506 196 550 209 588 244C618 273 646 288 694 285" stroke="#F26B25" stroke-width="13" stroke-linecap="round" stroke-dasharray="1 28"/>
+  <path d="M262 218C229 199 191 202 158 227C132 246 113 256 91 258" stroke="#F26B25" stroke-width="13" stroke-linecap="round" stroke-dasharray="1 28"/>
+  <circle cx="346" cy="249" r="20" fill="#F26B25"/>
+  <circle cx="583" cy="245" r="20" fill="#0A87DD"/>
+  <path d="M346 268C331 288 325 302 325 318M583 264C569 284 562 299 562 315" stroke="#263A51" stroke-width="8" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F26B25"/>
+      <stop offset=".5" stop-color="#9B9BB5"/>
+      <stop offset="1" stop-color="#0A87DD"/>
+    </linearGradient>
+  </defs>
+</svg>

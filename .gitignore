@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Production/build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local QA screenshots/artifacts
+test-*.png
+test-*.jpg
+test-*.jpeg
+test-*.webp
+
+# Source animation exports duplicated into public/assets for runtime
+pop_up_animations/
+
+# Archives and extracted stock audio packages
+*.zip
+__MACOSX/
+
+# Temporary caches
+.cache/
+tmp/
+temp/

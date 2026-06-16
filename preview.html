@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Știu că Știi UI Preview</title>
+    <style>
+      @font-face {
+        font-family: Barlow;
+        src: url("./public/assets/fonts/Barlow-Regular.ttf") format("truetype");
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: Barlow;
+        src: url("./public/assets/fonts/Barlow-Bold.ttf") format("truetype");
+        font-weight: 700;
+      }
+      @font-face {
+        font-family: Barlow;
+        src: url("./public/assets/fonts/Barlow-ExtraBold.ttf") format("truetype");
+        font-weight: 800;
+      }
+      :root {
+        --blue: #0a87dd;
+        --orange: #f26b25;
+        --dark: #111111;
+        --gradient: linear-gradient(90deg, #f26b25 0%, #9b9bb5 50%, #0a87dd 100%);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Barlow, Arial, sans-serif;
+        color: var(--dark);
+        background: #fff;
+      }
+      .app { min-height: 100vh; display: flex; flex-direction: column; }
+      .tabs {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        gap: 8px;
+        padding: 10px;
+        background: #fff;
+        border-bottom: 1px solid rgba(10,135,221,.25);
+        overflow: auto;
+      }
+      .tabs button {
+        border: 2px solid var(--blue);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--blue);
+        padding: 8px 14px;
+        font-weight: 800;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .tabs button.active { background: var(--blue); color: #fff; }
+      .screen { display: none; flex: 1; min-height: calc(100vh - 55px); }
+      .screen.active { display: flex; flex-direction: column; }
+      .simple-main { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px 20px 30px; }
+      .logo-hero { width: min(460px, 72vw); height: auto; }
+      .logo-side { width: min(287px, 70vw); height: auto; }
+      .button {
+        min-width: 285px;
+        min-height: 56px;
+        border: 0;
+        border-radius: 14px;
+        background: var(--blue);
+        color: #fff;
+        box-shadow: 0 7px 7px rgba(0,0,0,.22);
+        font-size: 28px;
+        line-height: 1;
+        font-weight: 800;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .footer {
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        padding: 28px 64px;
+        background: var(--blue);
+        color: #fff;
+      }
+      .owh { font-size: 42px; font-weight: 800; }
+      .footer-logo { width: 67px; filter: brightness(0) invert(1); }
+      .cinema { font-size: 26px; font-weight: 800; font-style: italic; }
+      .game-layout {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 26.6% 50.9% 22.5%;
+        min-height: 789px;
+      }
+      .left, .right { border-color: rgba(10,135,221,.75); }
+      .left {
+        border-right: 1px solid rgba(10,135,221,.75);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 64px;
+        padding: 30px;
+      }
+      .left .menu { display: flex; flex-direction: column; gap: 12px; }
+      .center {
+        padding: 48px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .right {
+        border-left: 1px solid rgba(10,135,221,.75);
+        padding: 82px 28px;
+      }
+      .right h2 { font-size: 25px; margin: 0 0 26px; font-weight: 800; }
+      .leader-row {
+        display: grid;
+        grid-template-columns: 82px 1fr;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+      .heart-small { width: 50px; vertical-align: middle; }
+      .leader-score { margin-left: -8px; font-size: 25px; font-weight: 800; }
+      .leader-name { font-size: 15px; font-weight: 800; }
+      .video { height: 132px; margin: 18px 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #eee; font-size: 24px; }
+      .player { align-self: flex-start; text-align: left; font-size: 25px; font-weight: 800; }
+      .hearts { display: flex; flex-wrap: wrap; max-width: 330px; }
+      .hearts img { width: 50px; margin-right: -8px; }
+      .timer {
+        position: absolute;
+        right: 18px;
+        top: 60px;
+        width: 159px;
+        height: 70px;
+        border-radius: 8px;
+        background: var(--gradient);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        font-weight: 800;
+      }
+      .timer:after {
+        content: "";
+        position: absolute;
+        bottom: -18px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        border-top: 20px solid #c9c5ce;
+      }
+      .category-title { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 32px; }
+      .category-title img { width: 100px; }
+      .category-title span { font-size: 34px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; color: transparent; }
+      .question { color: #00518f; font-size: 25px; font-weight: 700; margin-top: 26px; }
+      .question-image { width: 341px; height: 233px; margin: 12px auto 40px; background: radial-gradient(circle at center, #fff 0%, #f1f1ed 60%, #deded9 100%); overflow: hidden; }
+      .question-image:before { content: ""; display: block; height: 18px; margin-top: 112px; background: linear-gradient(90deg, transparent, rgba(0,0,0,.25), transparent); filter: blur(2px); }
+      .answers { width: min(608px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 22px 24px; }
+      .answer, .drawer-body {
+        background: var(--gradient);
+        border-radius: 14px;
+        color: #fff;
+        border: 0;
+        box-shadow: 0 7px 7px rgba(0,0,0,.22);
+        font-weight: 800;
+      }
+      .answer { min-height: 63px; padding: 10px 24px; font-size: 20px; }
+      .drawer-grid { width: min(688px, 100%); display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 18px; margin-top: 36px; }
+      .drawer-title { color: #00518f; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+      .drawer-body { height: 57px; display: flex; align-items: center; justify-content: center; }
+      .drawer-body span { width: 104px; height: 10px; border-radius: 99px; background: #fff; }
+      .big-heart { width: min(420px, 70vw); margin-top: 120px; }
+      .result h1 { font-size: 26px; margin: 18px 0 0; }
+      .result p { font-size: 20px; line-height: 1.16; }
+      .heart-choice { display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 70px; }
+      .heart-choice img { width: min(360px, 42vw); }
+      input { width: 286px; height: 58px; border: 1px solid var(--blue); border-radius: 14px; box-shadow: 0 7px 7px rgba(0,0,0,.15); font-size: 24px; text-align: center; }
+      @media (max-width: 900px) {
+        .footer { min-height: 110px; padding: 22px; gap: 14px; }
+        .owh { font-size: 30px; }
+        .cinema { font-size: 18px; }
+        .game-layout { display: block; }
+        .left, .right { border: 0; padding: 24px; }
+        .left { gap: 18px; }
+        .logo-side { width: 180px; }
+        .center { padding: 24px 18px; }
+        .timer { position: static; margin: 16px auto; }
+        .drawer-grid, .answers { grid-template-columns: 1fr; }
+        .category-title img { display: none; }
+        .heart-choice { flex-direction: column; gap: 10px; margin-top: 30px; }
+        .heart-choice img { width: 260px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <nav class="tabs">
+        <button class="active" data-screen="welcome">Welcome</button>
+        <button data-screen="name">Nume</button>
+        <button data-screen="heart">Inimă</button>
+        <button data-screen="categories">Categorii</button>
+        <button data-screen="game">Joc</button>
+        <button data-screen="win">Victorie</button>
+      </nav>
+
+      <section id="welcome" class="screen active">
+        <div class="simple-main">
+          <img class="logo-hero" src="./public/assets/logo-stiu-ca-stii.png" alt="Știu că Știi" />
+          <button class="button" data-screen="name">START JOC</button>
+        </div>
+        <footer class="footer"><span class="owh">OWH</span><img class="footer-logo" src="./public/assets/logo-stiu-ca-stii-white.png" alt="" /><span class="cinema">Cinemateca</span></footer>
+      </section>
+
+      <section id="name" class="screen">
+        <div class="simple-main">
+          <img class="logo-hero" src="./public/assets/logo-stiu-ca-stii.png" alt="Știu că Știi" />
+          <h1 style="color:#00518f;font-size:34px;margin:0 0 12px">Numele tău?</h1>
+          <input aria-label="Nickname" />
+        </div>
+        <footer class="footer"><span class="owh">OWH</span><img class="footer-logo" src="./public/assets/logo-stiu-ca-stii-white.png" alt="" /><span class="cinema">Cinemateca</span></footer>
+      </section>
+
+      <section id="heart" class="screen">
+        <div class="simple-main" style="align-items:stretch">
+          <div style="display:grid;grid-template-columns:287px 1fr;gap:32px;align-items:start">
+            <img class="logo-side" src="./public/assets/logo-stiu-ca-stii.png" alt="Știu că Știi" />
+            <div style="padding-top:150px;text-align:center">
+              <h1 style="font-size:34px">Ce culoare are inima ta?</h1>
+              <div class="heart-choice">
+                <img src="./public/assets/heart-orange.png" alt="Inimă oranj" />
+                <img src="./public/assets/heart-blue.png" alt="Inimă albastră" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer"><span class="owh">OWH</span><img class="footer-logo" src="./public/assets/logo-stiu-ca-stii-white.png" alt="" /><span class="cinema">Cinemateca</span></footer>
+      </section>
+
+      <section id="categories" class="screen">
+        <div class="game-layout">
+          <aside class="left"><img class="logo-side" src="./public/assets/logo-stiu-ca-stii.png" alt="Știu că Știi" /><div class="menu"><button class="button">ÎNCEPE JOCUL</button><button class="button">SETĂRI</button></div></aside>
+          <main class="center" style="justify-content:center">
+            <h1 style="font-size:36px;margin:0">Alege o categorie</h1>
+            <p style="font-size:20px;font-weight:700;line-height:1.16">Fiecare rundă are 5 întrebări și 30 de secunde pentru răspuns.<br />Pentru fiecare răspuns corect primești o inimă.</p>
+            <div class="drawer-grid">
+              <div><div class="drawer-title">CASCADĂ</div><div class="drawer-body"><span></span></div></div>
+              <div><div class="drawer-title">PICTURI MURALE</div><div class="drawer-body"><span></span></div></div>
+              <div><div class="drawer-title">GHICEȘTE ȚARA</div><div class="drawer-body"><span></span></div></div>
+              <div><div class="drawer-title">PERSONALITĂȚI</div><div class="drawer-body"><span></span></div></div>
+              <div><div class="drawer-title">IMAGINI CONECTATE</div><div class="drawer-body"><span></span></div></div>
+              <div><div class="drawer-title">LITERATURĂ</div><div class="drawer-body"><span></span></div></div>
+            </div>
+          </main>
+          <aside class="right"></aside>
+        </div>
+        <footer class="footer"><span class="owh">OWH</span><img class="footer-logo" src="./public/assets/logo-stiu-ca-stii-white.png" alt="" /><span class="cinema">Cinemateca</span></footer>
+      </section>
+
+      <section id="game" class="screen">
+        <div class="game-layout">
+          <aside class="left"><img class="logo-side" src="./public/assets/logo-stiu-ca-stii.png" alt="Știu că Știi" /><div class="menu"><button class="button">ÎNCEPE JOCUL</button><button class="button">SETĂRI</button></div></aside>
+          <main class="center" style="position:relative">
+            <div class="player">PlayerName<div class="hearts"><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /></div></div>
+            <div class="timer">00:30</div>
+            <div class="category-title"><img src="./public/assets/moving-balls.png" /><span>CASCADĂ</span><img src="./public/assets/moving-balls.png" /></div>
+            <div class="question">Ce reprezintă inscripțiile din imagine?</div>
+            <div class="question-image"></div>
+            <div class="answers"><button class="answer">Răspuns 1, text mai lung variantă de răspuns</button><button class="answer">Răspuns 2 varianta B alternativă</button><button class="answer">Răspuns 3</button><button class="answer">Răspuns 4</button></div>
+          </main>
+          <aside class="right"></aside>
+        </div>
+        <footer class="footer"><span class="owh">OWH</span><img class="footer-logo" src="./public/assets/logo-stiu-ca-stii-white.png" alt="" /><span class="cinema">Cinemateca</span></footer>
+      </section>
+
+      <section id="win" class="screen">
+        <div class="game-layout">
+          <aside class="left"><img class="logo-side" src="./public/assets/logo-stiu-ca-stii.png" alt="Știu că Știi" /><div class="menu"><button class="button">ÎNCEPE JOCUL</button><button class="button">SETĂRI</button></div></aside>
+          <main class="center result">
+            <div class="player">PlayerName<div class="hearts"><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /><img src="./public/assets/heart-orange-small.png" /></div></div>
+            <img class="big-heart" src="./public/assets/heart-orange.png" alt="Inimă oranj" />
+            <h1>Felicitări, Ionel!<br />Ai câștigat inima jocului!</h1>
+            <p>Acum faci parte din <strong>Clasamentul inimilor.</strong><br /><strong style="color:#00518f">Joacă din nou</strong> pentru a acumula cât mai multe inimi.<br />Și nu uita...</p>
+            <h2>Cu mintea câștigi inimi!</h2>
+          </main>
+          <aside class="right"></aside>
+        </div>
+        <footer class="footer"><span class="owh">OWH</span><img class="footer-logo" src="./public/assets/logo-stiu-ca-stii-white.png" alt="" /><span class="cinema">Cinemateca</span></footer>
+      </section>
+    </div>
+    <template id="right-content">
+      <h2>Clasamentul inimilor</h2>
+      <div class="leader-row"><div><img class="heart-small" src="./public/assets/heart-orange-small.png" /><span class="leader-score">x123</span></div><span class="leader-name">Ionel Ionescu</span></div>
+      <div class="leader-row"><div><img class="heart-small" src="./public/assets/heart-orange-small.png" /><span class="leader-score">x103</span></div><span class="leader-name">Zinaida Zenovia</span></div>
+      <div class="leader-row"><div><img class="heart-small" src="./public/assets/heart-blue-small.png" /><span class="leader-score">x45</span></div><span class="leader-name">Alexandra Joviala</span></div>
+      <div class="leader-row"><div><img class="heart-small" src="./public/assets/heart-orange-small.png" /><span class="leader-score">x43</span></div><span class="leader-name">Onisifor Ghibu</span></div>
+      <div class="leader-row"><div><img class="heart-small" src="./public/assets/heart-blue-small.png" /><span class="leader-score">x25</span></div><span class="leader-name">Flavius Macari</span></div>
+      <h2 style="margin-top:80px">Privește emisiunea</h2>
+      <div class="video">youtube emebeded</div>
+      <div class="video">youtube emebeded</div>
+    </template>
+    <script>
+      document.querySelectorAll(".right").forEach((el) => {
+        el.innerHTML = document.querySelector("#right-content").innerHTML;
+      });
+      document.querySelectorAll("[data-screen]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.screen;
+          if (!id) return;
+          document.querySelectorAll(".screen").forEach((screen) => screen.classList.toggle("active", screen.id === id));
+          document.querySelectorAll(".tabs button").forEach((tab) => tab.classList.toggle("active", tab.dataset.screen === id));
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum HeartColor {
+  orange
+  blue
+}
+
+enum GameStatus {
+  in_progress
+  won
+  lost
+  abandoned
+}
+
+enum GamePhase {
+  normal
+  final
+  result
+}
+
+enum SessionQuestionPhase {
+  normal
+  final
+}
+
+model Player {
+  id         String     @id @default(cuid())
+  nickname   String     @unique
+  heartColor HeartColor
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  sessions    GameSession[]
+  leaderboard LeaderboardEntry?
+}
+
+model LeaderboardEntry {
+  id                   String   @id @default(cuid())
+  playerId             String   @unique
+  totalPermanentHearts Int      @default(0)
+  gamesWon             Int      @default(0)
+  gamesLost            Int      @default(0)
+  updatedAt            DateTime @updatedAt
+
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([totalPermanentHearts, updatedAt])
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  accentColor String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  questions Question[]
+
+  @@index([isActive, order])
+}
+
+model Question {
+  id                      String   @id @default(cuid())
+  categoryId              String
+  text                    String
+  imageUrl                String?
+  difficultyLevel         Int      @default(1)
+  explanation             String?
+  isActive                Boolean  @default(true)
+  canAppearInNormalRounds Boolean  @default(true)
+  canAppearInFinalRound   Boolean  @default(false)
+  finalRoundWeight        Int      @default(0)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  category         Category              @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  answers          Answer[]
+  gameAnswers      GameAnswer[]
+  sessionQuestions GameSessionQuestion[]
+
+  @@index([categoryId, isActive, difficultyLevel])
+  @@index([isActive, canAppearInFinalRound, difficultyLevel])
+}
+
+model Answer {
+  id         String  @id @default(cuid())
+  questionId String
+  text       String
+  isCorrect  Boolean @default(false)
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model GameSession {
+  id                      String     @id @default(cuid())
+  playerId                String
+  heartColor              HeartColor
+  status                  GameStatus @default(in_progress)
+  currentPhase            GamePhase  @default(normal)
+  temporaryHearts         Int        @default(0)
+  heartsEarnedNormal      Int        @default(0)
+  normalRoundsCompleted   Int        @default(0)
+  finalQuestionsCompleted Int        @default(0)
+  rewardGranted           Boolean    @default(false)
+  lossRecorded            Boolean    @default(false)
+  startedAt               DateTime   @default(now())
+  finishedAt              DateTime?
+
+  player           Player                @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  gameAnswers      GameAnswer[]
+  sessionQuestions GameSessionQuestion[]
+
+  @@index([playerId, status, startedAt])
+}
+
+model GameSessionQuestion {
+  id          String               @id @default(cuid())
+  sessionId   String
+  questionId  String
+  phase       SessionQuestionPhase
+  roundNumber Int?
+  orderIndex  Int
+  createdAt   DateTime             @default(now())
+
+  session  GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  question Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, questionId])
+  @@index([sessionId, phase, roundNumber, orderIndex])
+}
+
+model GameAnswer {
+  id               String               @id @default(cuid())
+  sessionId        String
+  questionId       String
+  selectedAnswerId String?
+  isCorrect        Boolean
+  responseTimeMs   Int?
+  phase            SessionQuestionPhase
+  createdAt        DateTime             @default(now())
+
+  session  GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  question Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, questionId])
+  @@index([sessionId, phase, createdAt])
+}
