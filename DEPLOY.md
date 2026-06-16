@@ -2,6 +2,12 @@
 
 Aplicatia trebuie rulata separat de Cinemateca.
 
+Pentru VPS-ul existent OWH, vezi si checklist-ul specific:
+
+```bash
+deploy/VPS-STIUCASTII-CHECKLIST.md
+```
+
 ## Locatie recomandata
 
 ```bash
